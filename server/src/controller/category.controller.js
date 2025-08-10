@@ -1,11 +1,11 @@
-const Product = require('../model/products.model');
+const Category = require('../model/category.model');
 
 exports.index = async (req, res) => {
     try {
-        const products = await Product.find();
+        const categories = await Category.find();
         res.status(200).json({
             message: 'Success',
-            data: products
+            data: categories
         });
     } catch (error) {
         console.error(error);
@@ -17,15 +17,15 @@ exports.index = async (req, res) => {
 
 exports.show = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
-        if (!product) {
+        const category = await Category.findById(req.params.id);
+        if (!category) {
             return res.status(404).json({
-                message: 'Product not found'
+                message: 'Category not found'
             });
         }
         res.status(200).json({
             message: 'Success',
-            data: product
+            data: category
         });
     } catch (error) {
         console.error(error);
@@ -37,23 +37,23 @@ exports.show = async (req, res) => {
 
 exports.store = async (req, res) => {
     try {
-        const newProduct = new Product(req.body);
-        const savedProduct = await newProduct.save();
+        const newCategory = new Category(req.body);
+        const savedCategory = await newCategory.save();
         res.status(201).json({
-            message: 'Product created succesfully',
-            data: savedProduct
+            message: 'Category created successfully',
+            data: savedCategory
         });
     } catch (error) {
         console.error(error);
         res.status(500).json({
             message: error.message
-        })
+        });
     }
 }
 
 exports.update = async (req, res) => {
     try {
-        const updatedProduct = await Product.findByIdAndUpdate(
+        const updatedCategory = await Category.findByIdAndUpdate(
             req.params.id,
             req.body,
             {
@@ -61,15 +61,16 @@ exports.update = async (req, res) => {
                 runValidators: true
             }
         );
-        if (!updatedProduct) {
+
+        if (!updatedTask) {
             return res.status(404).json({
-                message: 'Product not found'
+                message: 'Category not found'
             });
         }
 
-        res.satus(200).json({
-            message: 'Product updated successfully',
-            data: updatedProduct
+        res.status(200).json({
+            message: 'Category updated successfully',
+            data: updatedCategory
         });
     } catch (error) {
         console.error(error);
@@ -81,19 +82,20 @@ exports.update = async (req, res) => {
 
 exports.destroy = async (req, res) => {
     try {
-        const deletedProduct = await Product.findByIdAndDelete(req.params.id);
-        if (!deletedProduct) {
+        const deletedCategory = await Category.findByIdAndUpdate(req.params.id);
+        if (!deletedCategory) {
             return res.status(404).json({
-                message: 'Product not found'
+                message: 'Category not found'
             });
         }
-        res.satus(200).json({
-            message: 'Product deleted successfully'
-        })
+        res.status(200).json({
+            message: 'Category deleted successfully'
+        });
+
     } catch (error) {
         console.error(error);
-        res.status(500).jsons({
+        res.status(500).json({
             message: error.message
-        });
+        })
     }
 }

@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', require('./routes/task.routes'));
 app.use('/api', require('./routes/product.routes'));
+app.use('/api', require('./routes/category.routes'));
 
 app.get('/', (req, res) => {
     res.send('Hello dsada')
